@@ -1,0 +1,112 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 01.09.2016, 18:55:12
+    Author     : Алена
+*/
+
+@charset "utf-8";
+
+* {
+margin: 0;
+padding: 0;
+border: 0;
+}
+
+div.header{
+    min-width:600px; 
+    max-width:4000px; 
+    height:100px;
+    text-align: center;
+    background-color: #225588;
+    color: #fefefe;
+    font-family:Georgia;
+    font-size: calc((100vw - 480px)/(1280 - 480) * (26 - 20) + 20px);
+    line-height: 100px;  //центрирование по вертикали  
+   
+}
+
+ul.css-menu-3 {
+    list-style: none;
+    border-bottom: 5px solid #bb0000;
+    border-top: 1px solid #114477;
+    padding: 11px;
+    background: #225588;
+}
+
+ul.css-menu-3 li {
+    display: inline
+}
+
+ul.css-menu-3 li a {
+    color: #fefefe;
+    text-decoration: none;
+    background: #225588;
+    border: 1px solid #225588;
+    border-bottom: 1px solid #114477; 
+    margin: 0; 
+    padding: 10px 14px 10px 14px 
+}
+
+ul.css-menu-3 li a:hover {border-left: 1px solid #114477; border-right: 1px solid #114477}
+
+ul.css-menu-3 li a.selected {
+    color: #fefefe;
+    background: #bb0000;
+    border: 1px #cc0000 solid;
+    border-bottom: 1px solid #bb0000;
+    border-left: 1px solid #770000;
+    padding: 10px 14px 10px 14px
+}
+div.left {
+     float:left;
+     border-right:2px dashed #717dc9; 
+     width:298px; 
+     height:500px; 
+     
+  //float:right;
+  background-color: #c0c0c0;
+  text-align: center;
+  font-size: 14px;
+}
+
+#map {
+    height:500px; 
+    min-width:280px; 
+    max-width:3800px; 
+    margin-left:200px; 
+    padding-left:20px;    
+/*  float:right;
+  margin-left: 3px;
+ /* height: 75vh;
+  width: 70vw;*/
+ // background-size: cover;
+}
+
+
+
+#list {
+  height:100%; 
+  max-height: 5000px;
+    min-width:280px; 
+    max-width:3800px; 
+    margin-left:280px; 
+    padding-left:20px;   
+}
+
+
+div.clear {
+  clear: both;
+}
+
+div.footer, div.footer a, div.footer p {
+    text-align: center;
+    background-color: #225588;
+    color: #fefefe;
+    font-size:12pt;
+    height: 20px;
+    
+}

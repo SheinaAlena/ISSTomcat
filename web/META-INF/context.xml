@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/InformationSupportSystemTomcat">
+  <Resource auth="Container" 
+            driverClassName="org.postgresql.Driver" 
+            maxActive="20" 
+            maxIdle="10" 
+            maxWait="-1" 
+            name="jdbc/RSS" 
+            password="123" 
+            type="javax.sql.DataSource" 
+            url="jdbc:postgresql://localhost:5432/RSS" 
+            username="postgres"/>
+  <ResourceLink name="jdbc/RSS"
+             global="jdbc/RSS"
+              type="javax.sql.DataSource" />
+</Context>
