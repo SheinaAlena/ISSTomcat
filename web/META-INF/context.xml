@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/InformationSupportSystemTomcat">
+<Context path="/InformationSupportSystemTomcat" >
   <Resource auth="Container" 
             driverClassName="org.postgresql.Driver" 
             maxActive="20" 
@@ -13,4 +13,5 @@
   <ResourceLink name="jdbc/RSS"
              global="jdbc/RSS"
               type="javax.sql.DataSource" />
+  
 </Context>

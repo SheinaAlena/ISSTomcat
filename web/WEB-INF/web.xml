@@ -9,10 +9,12 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+  
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+  
     <session-config>
         <session-timeout>
             30
@@ -21,51 +23,57 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    <security-constraint>
-        <display-name>AdminConstraint</display-name>
-        <web-resource-collection>
-            <web-resource-name>Admin</web-resource-name>
-            <description/>
-            <url-pattern>/secureAdmin/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>AdminRole</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>UserConstraint</display-name>
-        <web-resource-collection>
-            <web-resource-name>User</web-resource-name>
-            <description/>
-            <url-pattern>/secureUser/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>AdminRole</role-name>
-            <role-name>UserRole</role-name>
-        </auth-constraint>
-    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
             <form-login-page>/login.jsp</form-login-page>
             <form-error-page>/loginError.html</form-error-page>
         </form-login-config>
-    </login-config>
+    </login-config> 
+    <security-constraint> 
+        <web-resource-collection>
+            <web-resource-name>private</web-resource-name>
+            <url-pattern>/faces/private/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection> 
+        <auth-constraint> 
+            <role-name>tomcat</role-name>
+         </auth-constraint>
+ 
+    </security-constraint>
+  <!--  <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>private</web-resource-name>
+            <url-pattern>/faces/private/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>User</role-name>
+            <role-name>Admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
     <security-role>
-        <description>Пользователи, добавленные к этой роли, получат доступ к каталогу secureAdmin на сервере</description>
-        <role-name>AdminRole</role-name>
+        <description/>
+        <role-name>Admin</role-name>
     </security-role>
     <security-role>
-        <description>Пользователи, добавленные к этой роли, получат доступ к каталогу secureUser на сервере.</description>
-        <role-name>UserRole</role-name>
+        <description/>
+        <role-name>User</role-name>
     </security-role>
+    -->
+            
+    <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
     <resource-ref>
-        DB Connection
-        <res-ref-name>jdbc/RSS</res-ref-name>/
-        <res-type>javax.sql.DataSource</res-type>
+        <res-ref-name>jdbc/iss</res-ref-name>
+        <res-type>javax.sql.ConnectionPoolDataSource</res-type>
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
-        </resource-ref>
-</web-app>
+    </resource-ref>
+
+    Б  </web-app>

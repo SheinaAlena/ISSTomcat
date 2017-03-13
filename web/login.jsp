@@ -1,6 +1,6 @@
 <%-- 
     Document   : login
-    Created on : 25.01.2017, 17:10:30
+    Created on : 28.02.2017, 16:10:05
     Author     : Алена
 --%>
 
@@ -9,15 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Authorization</title>
+        <title>Авторизация</title>
     </head>
     <body>
         <form action="j_security_check" method="POST">
-   Username: <input type="text" name="j_username"><br>
-   <br>
-   <br>
-   Password:<input type="password" name="j_password">
-   <input type="submit" value="Login">
-</form>
+            Логин:<input type="text" name="j_username"><br>
+            Пароль:<input type="password" name="j_password">
+            <input type="submit" value="Вход">
+        </form>
+
     </body>
 </html>

@@ -24,13 +24,23 @@ import javax.faces.bean.ManagedBean;
 public class dataDB extends ConnectToDB implements Serializable {
 
     private List<String> tableCity;
+    private List<String> addTable;
+
+    
     private List<String> columns;
     private int cnt;
     private ConnectToDB dbTransport = new ConnectToDB();
 
-    @PostConstruct
+     @PostConstruct
     public void init() {
-
+        try {
+            tableCity = ConnectToDB.getData("*","transport").data;
+            columns = ConnectToDB.getData("*","transport").name;
+            cnt = columns.size();
+        } catch (Exception ex) {
+            Logger.getLogger(dataDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
 
     public void buttonAction(String param1, String param2) {
@@ -43,18 +53,31 @@ public class dataDB extends ConnectToDB implements Serializable {
         }
 
     }
-    public DataDB buttonAdd(String param1, String param2) {
-        try {
-            tableCity = ConnectToDB.getData(param1, param2).data;
-            columns = ConnectToDB.getData(param1, param2).name;
-            cnt = columns.size();
-        } catch (Exception ex) {
-            Logger.getLogger(dataDB.class.getName()).log(Level.SEVERE, null, ex);
+    public void buttonAdd(ActionEvent actionEvent) {
+//        try {
+//            tableCity = ConnectToDB.getData(param1, param2).data;
+//            columns = ConnectToDB.getData(param1, param2).name;
+//            cnt = columns.size();
+//        } catch (Exception ex) {
+//            Logger.getLogger(dataDB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        DataDB arr = new DataDB(tableCity, columns);
+//        return arr; 
+        for (int i = 0; i < addTable.size(); i++) {
+            
+            System.out.println(addTable.get(i));
         }
-        DataDB arr = new DataDB(tableCity, columns);
-        return arr; 
+        
     }
 
+    public void setAddTable(List<String> addT) {
+        addTable = addT;
+    }
+    
+    public List<String> getAddTable() {
+        return addTable;
+    }
+   
     public List<String> getColumns() {
         return columns;
     }

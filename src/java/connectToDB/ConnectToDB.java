@@ -37,21 +37,7 @@ public class ConnectToDB {
             connection = ds.getConnection();
             System.out.println("Соединение установлено");
             ps = connection.createStatement();
-            //Выполним запрос
-            ResultSet result = ps.executeQuery(
-                    "SELECT " + param1 + " FROM " + param2+" ORDER BY 1");
-            ResultSetMetaData md = result.getMetaData();
-            int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
-            while (result.next()) {
-                for (int i = 1; i <= cnt; i++) {
-                    data.add(result.getString(i));    // получаем значение  
-                }
-            }
-
-            for (int i = 1; i <= cnt; i++) {
-                name.add(md.getColumnName(i));  // получем имя колонки
-
-            }
+            selected(ps, param1, param2, data, name);
             connection.close();
 
         } catch (Exception ex) {
@@ -68,6 +54,24 @@ public class ConnectToDB {
         }
         DataDB arr = new DataDB(data, name);
         return arr;
+    }
+
+    public static void selected(Statement ps, String param1, String param2, List<String> data, List<String> name) throws SQLException {
+        //Выполним запрос
+        ResultSet result = ps.executeQuery(
+                "SELECT " + param1 + " FROM " + param2+" ORDER BY 1");
+        ResultSetMetaData md = result.getMetaData();
+        int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
+        while (result.next()) {
+            for (int i = 1; i <= cnt; i++) {
+                data.add(result.getString(i));    // получаем значение
+            }
+        }
+        
+        for (int i = 1; i <= cnt; i++) {
+            name.add(md.getColumnName(i));  // получем имя колонки
+            
+        }
     }
 
     static public class DataDB {
@@ -103,21 +107,7 @@ public class ConnectToDB {
             System.out.println("Соединение установлено");
             ps = connection.createStatement();
             //Выполним запрос
-            
-            ResultSet result = ps.executeQuery(
-                    "SELECT " + param1 + " FROM " + param2+" ORDER BY 1");
-            ResultSetMetaData md = result.getMetaData();
-            int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
-            while (result.next()) {
-                for (int i = 1; i <= cnt; i++) {
-                    data.add(result.getString(i));    // получаем значение  
-                }
-            }
-
-            for (int i = 1; i <= cnt; i++) {
-                name.add(md.getColumnName(i));  // получем имя колонки
-
-            }
+            inserted(ps, param1, param2, data, name);
             connection.close();
 
         } catch (Exception ex) {
@@ -134,6 +124,23 @@ public class ConnectToDB {
         }
         DataDB arr = new DataDB(data, name);
         return arr; 
+    }
+
+    public static void inserted(Statement ps, String param1, String param2, List<String> data, List<String> name) throws SQLException {
+        ResultSet result = ps.executeQuery(
+                "INSERT " + param1 + " FROM " + param2+" ORDER BY 1");
+        ResultSetMetaData md = result.getMetaData();
+        int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
+        while (result.next()) {
+            for (int i = 1; i <= cnt; i++) {
+                data.add(result.getString(i));    // получаем значение
+            }
+        }
+        
+        for (int i = 1; i <= cnt; i++) {
+            name.add(md.getColumnName(i));  // получем имя колонки
+            
+        }
     }
 
 }
