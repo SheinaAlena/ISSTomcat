@@ -22,7 +22,7 @@
         </h:head>
 
         <h:body>
-
+            
             <!--Заголовок-->
             <div class="header" align="center">Система информационного обеспечения органов государственной власти </div>
             <!--Меню навигации-->
@@ -30,32 +30,27 @@
                 <li><a href="main.xhtml" class="selected">Текущая обстановка</a></li>
                 <li><a href="directory.xhtml">Справочники</a></li>
                 <li><a href="reports.xhtml">Отчеты</a></li>
-                <li><a href="offense.xhtml">Нарушения</a></li>
-                <li><a href="#">Еще раздел</a></li>
+                <li><a href="vis.xhtml">Источники данных</a></li>
+                <li><a href="faces/../../admin/administration.xhtml">Администрирование</a></li>
             </ul>
             <!--Параметры-->
             <div class="left">  
 
                 <p:accordionPanel>
                     <p:tab title="Виды перевозок">
-                        <p:selectManyCheckbox id="grid1" value="#{checkboxView.selectedModesOfTransport}" layout="grid" columns="2" style="text-align: left">
-                            <p:ajax event="click" rendered="cart" listener="#{checkboxView.modes}"/>
+                        <p:selectManyCheckbox id="grid1" value="#{checkboxView.selectedModesOfTransport}" layout="grid" columns="1" style="text-align: left">
+                            <p:ajax event="click" rendered="cart" listener="#{checkboxView.modesOfTransport}"/>
                             <f:selectItems value="#{checkboxView.modesOfTransport}"/>
 
                         </p:selectManyCheckbox>
                     </p:tab>
 
                     <p:tab title="Районы и города">
-                        <p:selectManyCheckbox id="grid2" value="#{checkboxView.selectedCities}" layout="grid" columns="2" style="text-align: left">
+                        <p:selectManyCheckbox id="grid2" value="#{checkboxView.selectedCities}" layout="grid" columns="1" style="text-align: left">
                             <f:selectItems value="#{checkboxView.cities}"/>
                         </p:selectManyCheckbox>
                     </p:tab>
 
-                    <p:tab title="Маршруты">
-                        <p:selectManyCheckbox id="grid3" value="#{checkboxView.selectedRoute}" layout="grid" columns="4" style="text-align: left">
-                            <f:selectItems value="#{checkboxView.route}"/>
-                        </p:selectManyCheckbox>
-                    </p:tab>
 
              <!--       <p:tab title="Период">
                         <h:panelGrid columns="2" cellpadding="5">
@@ -79,66 +74,14 @@
             </div>
             <!--Карта-->
 
-            <h:form>   
-                <div id="map" >
-                    <script>
-// Create the map
-                        var map = L.map('map').setView([0, 0], 5);
-
-                        // Set up the OSM layer
-L.tileLayer(
-                        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {     maxZoom: 18
-  }).addTo(map);
-
-$.ajax({
-                        type: "POST",
-                            url: '../../mapGeo/123.json',
-    dataType: 'json',
-                        success: function (response) {         geojsonLayer = L.geoJson(response).addTo(map);
-                        map.fitBounds(geojsonLayer.getBounds());
-                        $("#info").fadeOut(500);
-    }
-});
-
-
-
-
-
-                    </script>
-                    <!--    <script type='text/javascript'>
-     //Определяем карту, координаты центра и начальный масштаб
-                             var map = L.map('map').setView([54.7306, 55.9077], 13);
-     //Добавляем на нашу карту слой OpenStreetMap
-                             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                 attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                             }).addTo(map);
-                             //   var regions = new L.GeoJSON.AJAX("gejson/Regions.geojson", {onEachFeature: function (feature, layer) {
-                             //         if (feature.properties) {
-                             //          var info = function (k) {
-                             //             var str = k + ": " + feature.properties[k];
-                             //              return str;
-                             //        }
-                             //      layer.bindPopup(Object.keys(feature.properties).map(info).join("<br />"), {maxHeight: 200});
-                             //    layer.setStyle({color: '#555', clickable: true, weight: 4, opacity: 0.8});
-                             // }
-                             //}});
-                             $.ajax({
-                                 type: "POST",
-                                 url: 'geojson/123.json',
-                                 dataType: 'json',
-                                 success: function (response) {
-                                     geojsonLayer = L.geoJson(response).addTo(map);
-                                     map.fitBounds(geojsonLayer.getBounds());
-                                     $("#info").fadeOut(500);
-                                 }
-                             });
-                         </script>
-     
-                    -->
-                </div>
+            <div id="map" >
+          <h:form>
+<script type="text/javascript" src="../../mapGeo/123.js"></script>
+<script type="text/javascript" src="../../mapGeo/script.js"></script>         
+                    
+                
             </h:form>
-
-
+</div>
 
             <div class="clear"></div>
 

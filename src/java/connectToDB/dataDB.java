@@ -53,7 +53,7 @@ public class dataDB extends ConnectToDB implements Serializable {
         }
 
     }
-    public void buttonAdd(ActionEvent actionEvent) {
+    public void buttonAdd() {
 //        try {
 //            tableCity = ConnectToDB.getData(param1, param2).data;
 //            columns = ConnectToDB.getData(param1, param2).name;

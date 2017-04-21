@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <link rel="stylesheet" type="text/css" href="../../style.css"></link>
+
+
+    </h:head>
+
+    <h:body>
+        <script type="text/javascript">
+            function openbox(id) {
+                display = document.getElementById(id).style.display;
+                if (display == 'none') {
+                    document.getElementById(id).style.display = 'block';
+                } else {
+                    document.getElementById(id).style.display = 'none';
+                }
+        </script>
+
+        <!--Заголовок-->
+        <div class="header" align="center">Система информационного обеспечения органов государственной власти </div>
+        <!--Меню навигации-->
+        <ul class="css-menu-3">
+            <li><a href="../private/main.xhtml" >Текущая обстановка</a></li>
+            <li><a href="../private/directory.xhtml" >Справочники</a></li>
+            <li><a href="../private/reports.xhtml">Отчеты</a></li>
+            <li><a href="../private/vis.xhtml">Источники данных</a></li>
+            <li><a href="administration.xhtml" class="selected">Администрирование</a></li>
+            <li><a href="#">Еще раздел</a></li>
+        </ul>
+
+
+        <!--Справочники-->
+        <div id='administration'>
+            <f:view>
+                <h:form  id="globalform">  
+
+                    <p:tabView style="font-size: 14px; line-height: 1.5">
+
+                        <p:tab title="Группы пользователей и права доступа">
+                            <p:panelGrid columns="2" style="width:100%; margin-bottom: 30px; border: 0px">
+                                <p:panel style="border: 0px">
+                                    <p:outputLabel for="role1" value="Группы пользователей" style="font-weight: bold"/>
+                                    <br/>
+                                    <p:commandButton value="Добавить" type="button" onclick="PF('dlg3').show();"
+                                                     style="font-weight: normal; font-size: 14px; text-align: center">
+                                    </p:commandButton>
+
+                                    <p:selectOneRadio id="role1" value="#{customizeRole.selectedRole}"  layout="grid" columns="1"  >
+                                        <p:ajax listener="#{customizeRole.refreshRole()}" update="gridrole" />
+                                        <f:selectItems value="#{customizeRole.nameRole}" var="c"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+
+                                <p:panel style="border: 0px">
+                                    <p:outputLabel for="gridrole" value="Выберите доступные права доступа" style="font-weight: bold"/>
+                                    <p:selectManyCheckbox id="gridrole"  value="#{customizeRole.selectedAuthority}"  layout="grid" columns="1" style="text-align: left">                                    
+
+                                        <f:selectItems value="#{customizeRole.authority}"/>
+                                    </p:selectManyCheckbox>
+                                    <p:commandButton value="Сохранить"   action="#{customizeRole.addAuthority()}" >
+                                    </p:commandButton>
+                                </p:panel>
+                            </p:panelGrid>
+                        </p:tab>
+
+                        <p:tab title="Видимость таблиц">
+                            <p:panelGrid columns="2" style="width:100%; margin-bottom: 30px; border: 0px">
+                                <p:panel style="border: 0px">
+                                    <p:outputLabel for="roles" value="Группы пользователей" style="font-weight: bold"/>
+                                    <p:selectOneRadio id="roles" value="#{customizeRole.selectedRoleT}"  layout="grid" columns="1" >
+                                        <p:ajax listener="#{customizeRole.refreshRoleT()}" update="gridrole1" />
+                                        <f:selectItems value="#{customizeRole.nameRole}"/>
+                                    </p:selectOneRadio>
+
+                                </p:panel>
+                                <p:panel style="border: 0px">
+                                    <p:outputLabel for="gridrole1" value="Выберите доступные таблицы" style="font-weight: bold"/>
+                                    <p:selectManyCheckbox id="gridrole1" value="#{customizeRole.selectedTable}" layout="grid" columns="1" style="text-align: left">                                    
+
+                                        <f:selectItems value="#{customizeRole.table}"/>
+                                    </p:selectManyCheckbox>
+
+                                    <p:commandButton value="Сохранить"   action="#{customizeRole.addTables()}" >
+                                    </p:commandButton>
+                                </p:panel>
+                            </p:panelGrid>
+                        </p:tab>
+
+                        <p:tab title="Активация пользователя" >
+                            <h:form id="aktivation">
+                                <p:dataTable var="directory1" value="#{customizeRole.userView}"
+                                             style="margin-bottom:280px; font-size: 12px" 
+                                             rows="#{customizeRole.user.size()/customizeRole.cnt}" 
+                                             id="tableUserDB" editable="true" >
+
+                                    <p:ajax event="rowEdit" listener="#{customizeRole.onRowEdit}" update="tableUserDB" />
+                                    <p:column headerText="ID">
+                                        <h:outputText value="#{directory1.id}"/> 
+                                    </p:column>
+                                    <p:column headerText="Фамилия">
+                                        <h:outputText value="#{directory1.surname}"/> 
+                                    </p:column>
+                                    <p:column headerText="имя">
+                                        <h:outputText value="#{directory1.nameUser}"/> 
+                                    </p:column>
+                                    <p:column headerText="Отчество">
+                                        <h:outputText value="#{directory1.patronymic}"/>                 
+
+                                    </p:column>
+                                    <p:column headerText="Организация">
+                                        <h:outputText value="#{directory1.organization}"/> 
+                                    </p:column>
+                                    <p:column headerText="Контактный телефон">
+                                        <h:outputText value="#{directory1.phone}"/> 
+                                    </p:column>
+                                    <p:column headerText="Логин">
+                                        <h:outputText value="#{directory1.login}"/> 
+                                    </p:column>
+                                    <p:column headerText="Пароль">
+                                        <h:outputText value="#{directory1.password}"/> 
+                                    </p:column>
+                                    <p:column headerText="Статус">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{directory1.status}" /></f:facet>
+                                            <f:facet name="input">
+                                                <h:selectOneMenu value="#{customizeRole.selectChangeStatus}" style="width:100%">
+                                                    <f:selectItems value="#{customizeRole.status}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                                                </h:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>                                      
+                                    </p:column>
+
+                                    <p:column headerText="Роль">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{directory1.group}" /></f:facet>
+                                            <f:facet name="input">
+                                                <h:selectOneMenu value="#{customizeRole.selectChangeRole}" style="width:100%">
+                                                    <f:selectItems value="#{customizeRole.nameRole}" var="man1" itemLabel="#{man1}" itemValue="#{man1}" />
+                                                </h:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column style="width:32px">
+                                        <p:rowEditor />
+                                    </p:column>
+                                </p:dataTable>
+
+                            </h:form>
+                        </p:tab>
+
+                        <p:tab title="Проверка ВИС">
+                            <h:form id="visTest">
+                                <p:panelGrid columns="2" style="margin-bottom: 30px; border: 0px">
+                                    <p:outputLabel for="visChange" value="Выберите ВИС:" style="font-weight: bold; width: 50px"/>
+                                    <p:selectOneMenu id="visChange"  value="#{visChange.selectVis}" style="width:125px">
+                                        <p:ajax listener="#{visChange.change()}" update="checkingVIS" />
+                                        <f:selectItems value="#{customizeRole.vis}"/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+
+                                <p:dataTable id="checkingVIS" var="checkingVIS" value="#{visChange.visConformity}" 
+                                             style="margin-bottom:280px; font-size: 12px">
+                                    <!--такая корявость 
+                                    <p:ajax event="rowEdit" listener="#{visChange.onRowEdit}" update="checkingVIS" />-->
+                                    <p:column headerText="ID">
+                                        <h:outputText value="#{checkingVIS.id}"/> 
+                                    </p:column>
+                                    <p:column headerText="Наименование колонок в файле">
+                                        <h:outputText value="#{checkingVIS.name_old}"/> 
+                                    </p:column>
+                                    <p:column headerText="Наименование колонок в БД">
+                                        <h:outputText value="#{checkingVIS.name_new}"/>                                                                             
+                                    </p:column>
+
+                                    <p:column headerText="Назначить соответствие">
+
+                                        <!--          <p:cellEditor>
+                                                    <f:facet name="output"><h:outputText value="#{checkingVIS.name_new}" /></f:facet>
+                                                    <f:facet name="input">
+                                                       <p:inputText id="modelInput" value="#{checkingVIS.name_new}" style="width:100%"/>
+                                                    </f:facet>
+                                                </p:cellEditor>-->
+                                    </p:column>
+
+                                    <!--   <p:column style="width:32px">
+                                           <p:rowEditor />
+                                       </p:column>-->
+                                </p:dataTable> 
+                                <p:panelGrid columns="2" style="margin-bottom: 30px; border: 0px;">
+                                    <p:selectOneMenu id="table1"  value="#{visChange.selectTable}" 
+                                                     style="width:125px">
+                                        <p:ajax listener="#{visChange.tableColumn()}" update="column1" />
+
+                                        <f:selectItem itemLabel="Выберите таблицу" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{customizeRole.table}"/>
+                                    </p:selectOneMenu>   
+
+                                    <p:selectOneMenu id="column1"  value="#{visChange.selectColumn}" 
+                                                     style="width:125px">
+
+                                        <f:selectItem itemLabel="Выберите колонку" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{visChange.columns}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="+" onclick="PF('dlg4').show()
+                                                        ;">
+                                    </p:commandButton>
+
+                                    <p:commandButton icon="fa-chevron-up" action="#{visChange.save()}" >
+                                    </p:commandButton>
+
+                                </p:panelGrid>    
+                            </h:form>
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+                <p:dialog header="Добавить роль" 
+                          widgetVar="dlg3" 
+                          modal="true" 
+                          resizable="false"
+                          draggable="false"
+                          width="auto" >
+                    <h:form>
+                        <p:outputPanel id="add">
+
+                            <p:panelGrid columns="2">  
+                                <p:outputLabel value="Наименование роли" for="name" style="width: 100px"/>
+                                <p:inputText id="name" size="32" value="#{directory1.toString()}" />
+                            </p:panelGrid>                        
+
+                            <p:commandButton value="Сохранить" action="#{customizeRole.addRoles()}" ajax="false" 
+                                             onsuccess="PF('dlg3').hide();" update=":form:role1" >
+                            </p:commandButton>
+
+                        </p:outputPanel>
+                    </h:form>
+                </p:dialog>  
+
+                <p:dialog header="Добавить колонку" 
+                          widgetVar="dlg4" 
+                          modal="true" 
+                          resizable="false"
+                          draggable="false"
+                          width="auto" >
+                    <h:form>
+                        <p:outputPanel id="addColumn">
+
+                            <p:panelGrid columns="2">  
+                                <p:outputLabel value="Наименование " for="name" style="width: 100px"/>
+                                <p:inputText id="name" size="32" value="" />
+                            </p:panelGrid>                        
+
+                            <p:commandButton value="Сохранить" action="#{customizeRole.addRoles()}" ajax="false" 
+                                             onsuccess="PF('dlg3').hide();" update=":form:role1" >
+                            </p:commandButton>
+
+                        </p:outputPanel>
+                    </h:form>
+                </p:dialog>  
+
+            </f:view>
+
+
+        </div>
+        <div class="clear"></div>
+        <!--Подвал - Footer-->
+        <div class="footer">
+            <p>Главная | <a href="#">О нас</a> | <a href="#">Техническая поддержка</a></p>
+        </div>
+
+    </h:body>
+
+</html>
+
+
+

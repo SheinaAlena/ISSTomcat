@@ -35,9 +35,8 @@ public class CheckboxView {
         offense = new ArrayList<String>();
         
         try {
-           cities=dbRequest.getData("name", "city").data;
+           cities=dbRequest.getData("district", "city").data;
            modesOfTransport=dbRequest.getData("name", "modes_of_transport").data;
-           route=dbRequest.getData("route.\"nameRoute\"", "route").data;
            
            
         } catch (Exception ex) {

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <link rel="stylesheet" type="text/css" href="../../style.css"></link>
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../bootstrapmini.css"></link>
+    </h:head>
+    
+    
+	<header align="center" style="background-color: #225588;
+    color: #fefefe;
+    font-family:Georgia;
+        line-height:100px;
+        vertical-align:middle;
+          height:100px; /* определенное значение высоты */
+   "> 
+           <p itemprop="description" class="lead" style="  display: inline-block;
+  line-height: 1.2;
+  vertical-align: middle;">Система информационного обеспечения органов государственной власти</p>
+	</header>
+    	
+            <div class="row"><!-- 
+--><div class="menu">
+					<nav class="navbar navbar-default">
+					  <div class="container-fluid" style="
+    border-bottom: 5px solid #bb0000;
+    border-top: 1px solid #114477;
+    background: #225588;">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+						  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						  </button>
+						</div>
+						
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						  <ul class="nav navbar-nav">
+							           <li><a href="main.xhtml" >Текущая обстановка</a></li>
+            <li><a href="directory.xhtml">Справочники</a></li>
+            <li><a href="reports.xhtml">Отчеты</a></li>
+            <li class="active"><a href="vis.xhtml">Источники данных</a></li>
+            <li><a href="faces/../../admin/administration.xhtml">Администрирование</a></li>
+            <li><a href="#">Еще раздел</a></li>
+						  </ul>
+						  
+						</div><!-- /.navbar-collapse -->
+					  </div><!-- /.container-fluid -->
+					</nav>					
+				</div>
+            </div><!-- 
+--><div id="left">
+            <f:view>
+                <h:form id="form1">  
+                    <c:if test="${pageContext.request.userPrincipal.name != null}">
+                        <p:commandButton value="Добавить" type="button" onclick="PF('dlg2').show();"
+                                         style="font-weight: normal; font-size: 14px; text-align: center">
+                        </p:commandButton>
+                    </c:if>
+                    <br/>
+                                <p:dataTable var="vis123" value="#{dataExporterView.vis}"
+                            style="margin-bottom:0px; font-size: 12px" 
+                            rows="#{dataExporterView.vis.size()}" selectionMode="single" selection="#{vis.select}" rowKey="#{vis123.id}">
+                            <p:ajax event="rowSelect" listener="#{vis.onRowSelect}"/>
+                            <p:ajax event="rowUnselect"/>
+                               
+                                  
+    <p:column headerText="id">
+      <h:outputText value="#{vis123.id}" />
+    </p:column>
+
+    <p:column headerText="Название">
+        <h:outputText value="#{vis123.name}" />
+    </p:column>
+                                    
+    <p:column headerText="Тип данных">
+        <h:outputText value="#{vis123.type}" />
+    </p:column>
+                        
+    <p:column width="500" headerText="Адрес">
+        <h:outputText value="#{vis123.adress}" />
+    </p:column>
+</p:dataTable>      
+                </h:form>
+                
+                
+                
+                
+            <h:form enctype="multipart/form-data">
+               <p:messages autoUpdate="true" />
+                    <p:panelGrid columns="2" style="width:100%; margin-bottom: 30px; border: 0px">
+                        <p:panel style="border: 0px">
+                            <p:outputLabel for="visses" value="Выберите ВИС" style="font-weight: bold"/>
+                            <p:selectOneRadio id="visses" value="456"  layout="grid" columns="1" >               
+                                <f:selectItems value="#{visService.names}"/>
+                            </p:selectOneRadio>
+                            <p:outputLabel for="types" value="Выберите Тип данных" style="font-weight: bold"/>
+                            <p:selectOneRadio id="types" value="123"  layout="grid" columns="1" >               
+                                <f:selectItems value="#{visService.types}"/>
+                            </p:selectOneRadio>
+                            <p:outputLabel value="Формат файла должен быть XML со структурой вида:" style="font-weight: bold"/>
+<br />
+<code class="code">&lt;?xml version="1.0"?&gt;<br />
+&lt;PRODUCTS&gt;<br />
+&nbsp; &lt;PRODUCT&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;TITLE&gt;&amp; Product #1 &lt;/TITLE&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;PRICE&gt;&amp; 10.00 &lt;/PRICE&gt;<br />
+&nbsp; &lt;/PRODUCT&gt;<br />
+&nbsp; &lt;PRODUCT&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;TITLE&gt;&amp; Product #2 &lt;/TITLE&gt;<br />
+&nbsp;&nbsp;&nbsp; &lt;PRICE&gt;&amp; 20.00 &lt;/PRICE&gt;<br />
+&nbsp; &lt;/PRODUCT&gt;<br />
+&lt;/PRODUCTS&gt;</code>
+
+                        </p:panel>
+                    </p:panelGrid>              
+            </h:form>
+            <h:form enctype="multipart/form-data">
+    <p:growl showDetail="true"/>
+    <p:fileUpload value="#{fileUploadView.file}" mode="simple" disabled="false" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(xml)$/"/>
+    <p:commandButton value="Upload" icon="ui-icon-arrow-u" ajax="false" actionListener="#{fileUploadView.upload}" disabled="false"/>
+
+            </h:form>
+            </f:view>
+        </div> 
+
+        <div class="clear"></div>
+        <!--Подвал - Footer-->
+        <div class="footer">
+            <p>Главная | <a href="#">О нас</a> | <a href="#">Техническая поддержка</a></p>
+        </div>
+</html>
+
+
+

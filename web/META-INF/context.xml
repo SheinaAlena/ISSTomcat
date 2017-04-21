@@ -13,5 +13,11 @@
   <ResourceLink name="jdbc/RSS"
              global="jdbc/RSS"
               type="javax.sql.DataSource" />
-  
+  <Realm className="org.apache.catalina.realm.JDBCRealm" 
+           driverName="org.postgresql.Driver" 
+           connectionURL="jdbc:postgresql://localhost:5432/RSS" 
+           connectionName="postgres" connectionPassword="123"
+           userTable='"users"' userNameCol="login" userCredCol="password" 
+           userRoleTable='"users"' roleNameCol='status' 
+   />
 </Context>

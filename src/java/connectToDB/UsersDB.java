@@ -1,0 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package connectToDB;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import view.Users;
+
+/**
+ *
+ * @author Алена
+ */
+public class UsersDB {
+    public static DataDB getData() throws Exception {
+        List<Users> data = new ArrayList<Users>();
+        List<String> name = new ArrayList<String>();
+        Connection connection = null;
+        Statement ps = null;
+
+        try {
+
+            Context initContext = new InitialContext();
+            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/RSS");
+            connection = ds.getConnection();
+            System.out.println("Соединение установлено c user");
+            ps = connection.createStatement();
+            ResultSet result = ps.executeQuery(
+                    "SELECT users.*, role.name FROM role, user_role, users where  user_role.\"ID_user\" = users.\"ID\" and  user_role.\"ID_role\" = role.\"ID\" ORDER BY 1");
+            System.out.println(result);
+            ResultSetMetaData md = result.getMetaData();
+            int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
+            while (result.next()) {
+                
+                    int id=result.getInt("id");
+                    String surname=result.getString("surname");
+                    String nameU=result.getString("name_user");
+                    String patronymic=result.getString("patronymic");
+                    String organization=result.getString("organization");
+                    String phone=result.getString("phone");
+                    String login=result.getString("login");
+                    String password=result.getString("password");
+                    String status=result.getString("status");
+                    String group=result.getString("name");
+                    
+                    Users user = new Users(id, surname,nameU,patronymic,organization,phone,login,password,status,group);
+                    data.add(user);
+                
+            }
+
+            for (int i = 1; i <= cnt; i++) {
+                name.add(md.getColumnName(i));  // получем имя колонки
+
+            }
+
+        } catch (Exception ex) {
+            //выводим наиболее значимые сообщения
+            Logger.getLogger(CheckboxView.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CheckboxView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        DataDB arr = new DataDB(data, name);
+        return arr;
+    }
+    static public class DataDB {
+
+        public List<Users> data;
+        public List<String> name;
+
+        public DataDB(List<Users> data, List<String> name) {
+            this.data = data;
+            this.name = name;
+        }
+
+        public List<Users> getData() {
+            return data;
+        }
+
+        public List<String> getName() {
+            return name;
+        }
+
+    }
+
+}

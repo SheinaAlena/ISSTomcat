@@ -14,7 +14,7 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-  
+   
     <session-config>
         <session-timeout>
             30
@@ -38,34 +38,10 @@
             <http-method>POST</http-method>
         </web-resource-collection> 
         <auth-constraint> 
-            <role-name>tomcat</role-name>
-         </auth-constraint>
- 
-    </security-constraint>
-  <!--  <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>private</web-resource-name>
-            <url-pattern>/faces/private/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>User</role-name>
-            <role-name>Admin</role-name>
+            <role-name>Активен</role-name>
         </auth-constraint>
     </security-constraint>
-    
-    <security-role>
-        <description/>
-        <role-name>Admin</role-name>
-    </security-role>
-    <security-role>
-        <description/>
-        <role-name>User</role-name>
-    </security-role>
-    -->
-            
+  
     <user-data-constraint>
         <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
@@ -75,5 +51,37 @@
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
+<!--
+    <filter>
+        <filter-name> springSecurityFilterChain </filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
 
-    Б  </web-app>
+    <filter-mapping>
+        <filter-name> springSecurityFilterChain </filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/applicationContext.xml
+        </param-value>
+    </context-param>
+    
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+-->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>4.0.1.RELEASE</version>
+        <type>jar</type>
+    </dependency>
+ 
+</web-app>
